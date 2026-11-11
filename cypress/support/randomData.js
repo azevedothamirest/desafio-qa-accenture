@@ -13,6 +13,22 @@ const STATES = {
   Rajasthan: ['Jaipur', 'Jaiselmer']
 }
 
+// O e-mail leva um sufixo único: é por ele que achamos a linha na tabela.
+let counter = 0
+export const randomRecord = () => {
+  const firstName = pick(FIRST_NAMES)
+  const lastName = pick(LAST_NAMES)
+  counter += 1
+  return {
+    firstName,
+    lastName,
+    email: `${firstName}.${lastName}.${Date.now()}${counter}@teste.com`.toLowerCase(),
+    age: String(18 + Math.floor(Math.random() * 50)),
+    salary: String(2000 + Math.floor(Math.random() * 8000)),
+    department: pick(['Engineering', 'Legal', 'Compliance', 'Finance', 'Sales'])
+  }
+}
+
 export const randomStudent = () => {
   const firstName = pick(FIRST_NAMES)
   const lastName = pick(LAST_NAMES)

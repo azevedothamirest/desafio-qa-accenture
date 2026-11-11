@@ -7,6 +7,7 @@ Para cada um: como reproduzir, o resultado esperado e obtido, e como a automaç�
 |----|------|--------|------------|---------------------|
 | DEF-001 | Forms > Practice Form | Botão "Close" não fecha o popup de confirmação | Média | Contornado (fecha com Esc) |
 | DEF-002 | Forms > Practice Form | Data de nascimento sem espaço após a vírgula no popup | Baixa | Apenas registrado |
+| DEF-003 | Elements > Web Tables | Deletar um registro novo apaga todos os registros novos | Alta | Contornado (deleta só se ainda existir) |
 
 ---
 
@@ -45,3 +46,25 @@ Ver `closeModal()` em `cypress/support/pages/PracticeFormPage.js`.
 **Resultado obtido:** "09 April,1999" (sem espaço depois da vírgula)
 
 **Na automação:** apenas registrado; o teste não valida o formato da data.
+
+---
+
+## DEF-003 – Deletar um registro novo apaga todos os registros novos
+
+- **Tela:** Elements > Web Tables
+- **Severidade:** Alta (perda de dados: o usuário apaga registros que não pediu para apagar)
+
+**Passos para reproduzir**
+1. Acessar https://demoqa.com/webtables
+2. Clicar em **Add** e criar o registro A (e-mail a@t.com)
+3. Clicar em **Add** e criar o registro B (e-mail b@t.com)
+4. Clicar no ícone de lixeira apenas do registro A
+
+**Resultado esperado:** só o registro A é removido; B continua na tabela.
+
+**Resultado obtido:** A e B somem da tabela. Os registros novos recebem o mesmo id
+(o botão de delete dos dois é `delete-record-4`), e a exclusão remove todos com esse id.
+
+**Contorno na automação:** no cenário bônus (12 registros), o passo de exclusão só clica em
+deletar se o registro ainda está na tabela, e o passo final valida que nenhum dos 12 sobrou.
+Ver `deleto todos os registros criados` em `cypress/support/step_definitions/webTables.steps.js`.
