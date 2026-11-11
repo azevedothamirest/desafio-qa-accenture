@@ -8,6 +8,7 @@ Para cada um: como reproduzir, o resultado esperado e obtido, e como a automaç�
 | DEF-001 | Forms > Practice Form | Botão "Close" não fecha o popup de confirmação | Média | Contornado (fecha com Esc) |
 | DEF-002 | Forms > Practice Form | Data de nascimento sem espaço após a vírgula no popup | Baixa | Apenas registrado |
 | DEF-003 | Elements > Web Tables | Deletar um registro novo apaga todos os registros novos | Alta | Contornado (deleta só se ainda existir) |
+| DEF-004 | Widgets > Progress Bar | Reset logo ao chegar em 100% não para a barra | Média | Contornado (espera 1 s antes do reset) |
 
 ---
 
@@ -68,3 +69,25 @@ Ver `closeModal()` em `cypress/support/pages/PracticeFormPage.js`.
 **Contorno na automação:** no cenário bônus (12 registros), o passo de exclusão só clica em
 deletar se o registro ainda está na tabela, e o passo final valida que nenhum dos 12 sobrou.
 Ver `deleto todos os registros criados` em `cypress/support/step_definitions/webTables.steps.js`.
+
+---
+
+## DEF-004 – Reset logo ao chegar em 100% não para a barra
+
+- **Tela:** Widgets > Progress Bar
+- **Severidade:** Média (o Reset não deixa a barra no estado inicial)
+
+**Passos para reproduzir**
+1. Acessar https://demoqa.com/progress-bar
+2. Clicar em **Start** e esperar a barra chegar a 100%
+3. Clicar em **Reset** imediatamente, assim que o botão aparecer
+
+**Resultado esperado:** a barra volta para 0% e fica parada, com o botão **Start** disponível.
+
+**Resultado obtido:** a barra vai para 0% e volta a andar sozinha (0 → 3 → 6 → 9…).
+Rodando pelo Cypress, ela chega a ficar em 100% depois do Reset. Esperando cerca de 1 s
+depois de chegar a 100% antes de clicar em Reset, o comportamento é o correto.
+Parece que o timer que faz a barra andar não é encerrado a tempo.
+
+**Contorno na automação:** `reset()` em `cypress/support/pages/ProgressBarPage.js` espera 1 s
+antes de clicar. É a única espera fixa do projeto, e está documentada no código.
