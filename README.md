@@ -23,6 +23,7 @@ Automação de testes de API e Frontend no [demoqa.com](https://demoqa.com), fei
 | Parte | Cenário | Feature |
 |-------|---------|---------|
 | 1 – API | Criar usuário → gerar token → confirmar autorização → listar livros → alugar 2 livros → ver detalhes do usuário | [bookstore.feature](cypress/e2e/api/bookstore.feature) |
+| 1 – API (extra) | Cenários de erro: senha inválida (Esquema do Cenário com 4 regras), usuário duplicado, token com senha errada, alugar sem token | [bookstoreNegativo.feature](cypress/e2e/api/bookstoreNegativo.feature) |
 | 2 – UI | Forms > Practice Form | [practiceForm.feature](cypress/e2e/ui/practiceForm.feature) |
 | 2 – UI | Alerts, Frame & Windows > Browser Windows | [browserWindows.feature](cypress/e2e/ui/browserWindows.feature) |
 | 2 – UI | Elements > Web Tables (CRUD + **bônus**: 12 registros) | [webTables.feature](cypress/e2e/ui/webTables.feature) |

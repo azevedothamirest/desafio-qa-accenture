@@ -1,14 +1,8 @@
 import { Given, When, Then, Before } from '@badeball/cypress-cucumber-preprocessor'
 import * as api from '../bookstoreApi'
+import { ctx, resetCtx } from '../apiContext'
 
-let ctx
-
-Before({ tags: 'not @ui' }, () => {
-  ctx = {
-    userName: `thamires.qa.${Date.now()}`,
-    password: 'Teste@12345'
-  }
-})
+Before({ tags: 'not @ui' }, resetCtx)
 
 Given('que eu crio um novo usuário', () => {
   api.createUser(ctx.userName, ctx.password).then((res) => {
