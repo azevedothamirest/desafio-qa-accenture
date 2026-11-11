@@ -22,7 +22,10 @@ export const randomRecord = () => {
   return {
     firstName,
     lastName,
-    email: `${firstName}.${lastName}.${Date.now()}${counter}@teste.com`.toLowerCase(),
+    // Curto de propósito: e-mails longos alargam a tabela e empurram os ícones de
+    // editar/deletar para baixo da coluna lateral (aconteceu no CI, em Linux).
+    // Date.now() em base 36 + contador continua único e ocupa só ~10 caracteres.
+    email: `${Date.now().toString(36)}${counter}@t.com`,
     age: String(18 + Math.floor(Math.random() * 50)),
     salary: String(2000 + Math.floor(Math.random() * 8000)),
     department: pick(['Engineering', 'Legal', 'Compliance', 'Finance', 'Sales'])
